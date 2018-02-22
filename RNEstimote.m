@@ -2,9 +2,9 @@
 
 #import <EstimoteSDK/EstimoteSDK.h>
 
-#import "RCTBridge.h"
-#import "RCTLog.h"
-#import "RCTEventDispatcher.h"
+#import <React/RCTBridge.h>
+#import <React/RCTLog.h>
+#import <React/RCTEventDispatcher.h>
 
 @interface RNEstimote() <ESTNearableManagerDelegate>
 
@@ -323,7 +323,7 @@ RCT_EXPORT_METHOD(stopRanging)
 
 
 -(NSDictionary *)dictionaryForNearable:(ESTNearable*)nearable{
-    return @{ @"identifier" : nearable.identifier, @"type" : [self nameForNearableType:nearable.type], @"zone" : [self nameForNearableZone:nearable.zone], @"rssi": [NSNumber numberWithLong:nearable.rssi] };
+    return @{ @"identifier" : nearable.identifier, @"type" : [self nameForNearableType:nearable.type], @"zone" : [self nameForNearableZone:nearable.zone], @"rssi": [NSNumber numberWithLong:nearable.rssi], @"temperature": [NSNumber numberWithDouble:nearable.temperature], @"battery": [NSNumber numberWithInteger: nearable.idleBatteryVoltage], @"moving": [NSNumber numberWithBool:nearable.isMoving]  };
 }
 
 - (NSDictionary *)constantsToExport
@@ -342,9 +342,7 @@ RCT_EXPORT_METHOD(stopRanging)
              @"ESTNearableTypeGeneric": [NSNumber numberWithInt:ESTNearableTypeGeneric],
              @"ESTNearableTypeAll": [NSNumber numberWithInt:ESTNearableTypeAll],
 
-             /**
-              *  Physical orientation of the device in 3D space.
-              */
+ 
              // typedef NS_ENUM(NSInteger, ESTNearableOrientation)
              @"ESTNearableOrientationUnknown": [NSNumber numberWithInt:ESTNearableOrientationUnknown],
              @"ESTNearableOrientationHorizontal": [NSNumber numberWithInt:ESTNearableOrientationHorizontal],
@@ -354,18 +352,14 @@ RCT_EXPORT_METHOD(stopRanging)
              @"ESTNearableOrientationLeftSide": [NSNumber numberWithInt:ESTNearableOrientationLeftSide],
              @"ESTNearableOrientationRightSide": [NSNumber numberWithInt:ESTNearableOrientationRightSide],
 
-             /**
-              *  Proximity zone related to distance from the device.
-              */
+ 
              // typedef NS_ENUM(NSInteger, ESTNearableZone)
              @"ESTNearableZoneUnknown": [NSNumber numberWithInt:ESTNearableZoneUnknown],
              @"ESTNearableZoneImmediate": [NSNumber numberWithInt:ESTNearableZoneImmediate],
              @"ESTNearableZoneNear": [NSNumber numberWithInt:ESTNearableZoneNear],
              @"ESTNearableZoneFar": [NSNumber numberWithInt:ESTNearableZoneFar],
 
-             /**
-              *  Type of firmware running on the device.
-              */
+             
              // typedef NS_ENUM(NSInteger, ESTNearableFirmwareState)
              @"ESTNearableFirmwareStateBoot": [NSNumber numberWithInt:ESTNearableFirmwareStateBoot],
              @"ESTNearableFirmwareStateApp": [NSNumber numberWithInt:ESTNearableFirmwareStateApp]
